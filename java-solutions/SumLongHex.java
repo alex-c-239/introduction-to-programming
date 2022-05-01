@@ -1,0 +1,30 @@
+public class SumLongHex {
+    public static void main(String[] args) {
+        long res = 0;
+        for (String s : args) {
+            int k = 0, len = 0;
+            for (int i = 0; i < s.length(); ++i) {
+                char a = s.charAt(i);
+                if (!Character.isWhitespace(a) && i < s.length() - 1) {
+                    len++;
+                    continue;
+                }
+                if (len > 0 || (i == s.length() - 1 && !Character.isWhitespace(a))) {
+                    if (!Character.isWhitespace(a)) {
+                        len++;
+                    }
+                    String str = s.substring(k, k + len);
+                    if (str.startsWith("0x") || str.startsWith("0X")) {
+                        str = str.substring(2);
+                        res += Long.parseUnsignedLong(str, 16);
+                    } else {
+                        res += Long.parseLong(str, 10);
+                    }
+                }
+                len = 0;
+                k = i + 1;
+            }
+        }
+        System.out.println(res);
+    }
+}
